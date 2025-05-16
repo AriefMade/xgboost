@@ -36,7 +36,17 @@ print(f"Key types: {[type(k).__name__ for k in quarterly_models.keys()]}")
 # Buat mapping kategori berdasarkan kategori unik dalam data
 # Jika menggunakan data CSV, ambil kategori unik
 unique_categories = df['category'].unique()
-category_mapping = {i: f"Category {i}" for i in unique_categories}
+category_mapping = {
+    1: "Baju Pantai Pria",
+    2: "Celana Pantai Pria",
+    3: "Pakaian Pantai Wanita",
+    4: "Baju Kemeja Formal",
+    5: "Aksesoris Kerang",
+    6: "Kain Tradisional"
+}
+for cat in unique_categories:
+    if cat not in category_mapping:
+        category_mapping[cat] = f"Kategori {cat}" 
 
 # Inisialisasi aplikasi Dash
 app = dash.Dash(__name__, title='The X Aksha Buyer Preference Dashboard')
@@ -656,7 +666,7 @@ def update_recommendations(n_clicks, membership_level, year, quarter):
                         html.B(f"{rec['transaction_count']}")
                     ]),
                     html.P([
-                        html.B("Produk yang direkomendasikan untuk Q{quarter+1 if quarter < 4 else 1}:")
+                        html.B(f"Produk yang direkomendasikan untuk Q{quarter+1 if quarter < 4 else 1}:")
                     ]),
                     product_table
                 ])
